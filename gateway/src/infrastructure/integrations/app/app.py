@@ -14,9 +14,9 @@ class AppClient(BaseAppClient):
 
     def format(self, notification: Face) -> AppFormat | AppFormatIdentified:
         data = {"face_id": notification.face_id, "is_identified": notification.is_identified,
-                "detection_time": datetime.date.isoformat(notification.event_time),
+                "detection_time": datetime.datetime.isoformat(notification.event_time),
                 "image": notification.image}
-        if notification.is_identified:
+        if not notification.is_identified:
             return data
         else:
             data["first_name"] = notification.first_name,
@@ -28,4 +28,5 @@ class AppClient(BaseAppClient):
 
     async def send(self, notification: Face) -> None:
         async with self.client as async_client:
+            print(self.format(notification))
             await async_client.post('http://localhost:8081/person', json=self.format(notification=notification))

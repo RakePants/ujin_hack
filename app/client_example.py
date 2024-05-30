@@ -4,7 +4,7 @@ from python_sdk.models import requests
 
 client = Client(Config(
     con_token='sfd',
-    host='https://api-product.mysmartflat.ru/api'
+    host='https://api-uae-test.ujin.tech'
 ))
 
 rm = requests.HealthCheckRequest()

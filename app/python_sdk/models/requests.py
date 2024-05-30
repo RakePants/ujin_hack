@@ -35,10 +35,16 @@ class HealthCheckRequest(BaseRequest):
 
 
 class SubmissionRequest(BaseRequest):
-    response_model = SubmissionResponse
+    method: str = 'GET'
+    endpoint: str = '/echo/'
+    query: QueryModel = QueryModel(query={'json': 1})
+    response_model: SubmissionResponse
     # TODO написать запрос для отправки заявки в УК
 
 
 class OmissionRequest(BaseRequest):
-    response_model = OmissionResponse
+    method: str = 'GET'
+    endpoint: str = '/echo/'
+    query: QueryModel = QueryModel(query={'json': 1})
+    response_model:  OmissionResponse
     # TODO написать запрос для получения пропуска

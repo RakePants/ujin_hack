@@ -10,9 +10,9 @@ class Face:
     is_identified: bool
     event_time: datetime.datetime | str
     image: bytes | str
-    first_name: str
-    last_name: str
-    patronymic: str
+    first_name: str | None
+    last_name: str | None
+    patronymic: str | None
 
     def __post_init__(self) -> None:
         if isinstance(self.image, bytes):

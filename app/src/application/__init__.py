@@ -12,25 +12,28 @@ from app.src.config.config import Config as AppConfig
 
 def init_container() -> punq.Container:
     container: punq.Container = punq.Container()
-    config: AppConfig = container.register(AppConfig, instance=AppConfig(), scope=punq.Scope.singleton)
+    container.register(AppConfig, instance=AppConfig(), scope=punq.Scope.singleton)
+    config: AppConfig = container.resolve(AppConfig)
+    print(config)
+    print(config.MONGODB_CONNECTION_URI, config.UJIN_CON_TOKEN, config.UJIN_HOST)
 
     def create_mongodb_client():
         return AsyncIOMotorClient(
             config.MONGODB_CONNECTION_URI
         )
 
-    #container.register(AsyncIOMotorClient, factory=create_mongodb_client, scope=punq.Scope.singleton)
-    #client = container.resolve(AsyncIOMotorClient)
-#
-    #def init_mongodb_repository() -> BasePersonsRepository:
-    #    return MongoPersonsRepository(
-    #        mongo_db_client=container.resolve(client),
-    #        mongo_db_name='logs'
-    #    )
-#
-    #container.register(BasePersonsRepository, factory=init_mongodb_repository(), scope=punq.Scope.singleton)
+    container.register(AsyncIOMotorClient, factory=create_mongodb_client, scope=punq.Scope.singleton)
+    client: AsyncIOMotorClient = container.resolve(AsyncIOMotorClient)
 
-    ujin_client: Client = Client(UJINConfig(con_token=config.UJIN_TOKEN))
+    def init_mongodb_repository() -> BasePersonsRepository:
+        return MongoPersonsRepository(
+            mongo_db_client=client,
+            mongo_db_name='logs'
+        )
+
+    container.register(BasePersonsRepository, factory=init_mongodb_repository, scope=punq.Scope.singleton)
+
+    ujin_client: Client = Client(UJINConfig(con_token=config.UJIN_CON_TOKEN, host=config.UJIN_HOST))
 
     def init_submission_integration() -> BaseSubmission:
         return UJINSubmissions(client=ujin_client)
