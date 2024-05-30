@@ -35,7 +35,7 @@ class HealthCheckRequest(BaseRequest):
 
 class SubmissionRequest(BaseRequest):
     method: str = 'POST'
-    endpoint: str = 'https://api-uae-test.ujin.tech/api/v1/tck/bms/tickets/create/'
+    endpoint: str = '/api/v1/tck/bms/tickets/create/'
     body: BodyModel = BodyModel(body={
         "title": "заявка",
         "description": "Обнаружен потусторонний объект",
