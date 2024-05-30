@@ -26,7 +26,8 @@ class UJINOmission(BaseOmissions):
                 return
 
         request = CreateOmissionRequest.create_with_params(
-            full_name=f"{person.last_name} {person.first_name} {person.patronymic}"
+            full_name=f"{person.last_name} {person.first_name} {person.patronymic}",
+            face_id=person.face_id,
         )
 
         await self.client.execute(request)
