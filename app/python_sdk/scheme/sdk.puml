@@ -1,0 +1,104 @@
+@startuml SDK
+
+
+entity client.Connection {
+    _connector: Connector
+    auth: AbstractAuth
+    conn_type: str || const.CONNECTION_TYPE
+    + __init__(login: str, password: str, refresh: Callable = None)
+    - _auth(kwargs): dict
+    + connect(): dict
+    + get_jwt(): dict
+    + refresh(refresh_token: str): dict
+    + close(): bool
+}
+
+entity client.auth.AbstractAuth {
+    jwt_body: dict
+    + __init__()
+    + auth(): dict
+    + refresh(refresh_token: str): dict
+}
+
+entity client.auth.BasicAuth {
+    login: str,
+    password: str
+    + __init__()
+}
+
+entity client.auth.OAuth2 {
+    client_id: str,
+    client_secret: str,
+    authorization_type: str = 'code' || 'password'
+    scope: List<str>,
+    redirect_uri: str
+    + __init__(client_id: str, client_secret: str, authorization_type: str, redirect_uri: str, scope: list = None, login: str = None, password: str = None)
+    + code2token(code: str): dict
+}
+
+entity core.Core {
+    _conn: client.Connection
+    factory: APIFactory
+    api: API
+    + __init__()
+}
+
+entity core.API {
+    + __init__()
+}
+
+entity core.APIFactory {
+    + __init__()
+    + build(scope: list || str = 'all'): object
+}
+
+entity protocol.Connector {
+    + __init__()
+    + request(kwargs): Response
+}
+
+entity protocol.HTTP {
+    + __init__()
+}
+
+entity protocol.WebHook {
+    + __init__()
+}
+
+entity protocol.Websocket {
+    + __init__()
+}
+
+
+client.auth.BasicAuth --|> client.auth.AbstractAuth
+client.auth.OAuth2 --|> client.auth.AbstractAuth
+client.Connection *-- client.auth.AbstractAuth
+
+core.Core o-- client.Connection
+
+core.Core *-- core.APIFactory
+core.Core o-- core.API
+
+core.APIFactory -- core.API
+
+
+core.API ..|> core.models.ISCUD
+core.API ..|> core.models.IDevice
+core.API ..|> core.models.IZone
+core.API ..|> core.models.IAction
+core.API ..|> core.models.IEvent
+core.API ..|> core.models.IRegistration
+core.API ..|> core.models.IAuthorization
+
+core.models.ISCUD --|> core.models.IIntercom
+core.models.IDevice --|> core.models.IMeasure
+core.models.IEvent --|> core.models.INotify
+
+client.Connection *-- protocol.Connector
+
+
+protocol.Connector *-- protocol.HTTP
+protocol.Connector *-- protocol.Websocket
+protocol.HTTP *-- protocol.WebHook
+
+@enduml
