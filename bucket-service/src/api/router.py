@@ -13,8 +13,14 @@ router = APIRouter(prefix="/s3", tags=["S3 Storage Service"])
     status_code=status.HTTP_201_CREATED,
 )
 async def upload_image(
-    image: Annotated[str, Body(embed=False)],
+    b64_image: Annotated[
+        str,
+        Body(
+            embed=False,
+            example="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
+        ),
+    ],
     s3: Annotated[S3Service, Depends(get_s3_client)],
 ):
-    bytes_image = base64.b64decode(image)
+    bytes_image = base64.b64decode(b64_image)
     return await s3.upload_image(bytes_image)

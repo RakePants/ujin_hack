@@ -26,18 +26,16 @@ class S3Repository(AbstractRepository):
     secret_key = None
     endpoint_url = None
     bucket_name = None
-
-    config = {
-        "aws_access_key_id": access_key,
-        "aws_secret_access_key": secret_key,
-        "endpoint_url": endpoint_url,
-    }
-    bucket_name = bucket_name
     session = get_session()
 
     @asynccontextmanager
     async def get_client(self) -> AioBaseClient:
-        async with self.session.create_client("s3", **self.config) as client:
+        config = {
+            "aws_access_key_id": self.access_key,
+            "aws_secret_access_key": self.secret_key,
+            "endpoint_url": self.endpoint_url,
+        }
+        async with self.session.create_client("s3", **config) as client:
             yield client
 
     async def get(self, id: str) -> str:
@@ -49,15 +47,19 @@ class S3Repository(AbstractRepository):
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=e
             )
 
-    async def put(self, file: bytes) -> uuid.UUID:
+    async def put(self, file: bytes) -> str:
         try:
             async with self.get_client() as client:
-                name = uuid.uuid4()
-                await client.put_object(Body=file, Bucket=self.bucket_name, Key=name)
-                return name
+                object_name = f"{uuid.uuid4().hex}.jpg"
+                await client.put_object(
+                    Bucket=self.bucket_name,
+                    Key=object_name,
+                    Body=file,
+                )
+                return object_name
         except ClientError as e:
             raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=e
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
             )
 
     async def delete(self, name: str):
