@@ -6,6 +6,7 @@ services:
     build:
       context: .
       dockerfile: ./bucket-service/Dockerfile
+    restart: unless-stopped
     networks:
       - ujin-backend
     ports:
