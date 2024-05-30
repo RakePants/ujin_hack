@@ -14,10 +14,10 @@ RUN apt-get update && apt-get install -y iputils-ping &&\
     rm -rf /var/lib/apt/lists/* && \
     rm -r requirements
 
-COPY --chown=papperuser:papperuser . backet-service/
+COPY --chown=papperuser:papperuser . bucket-service/
 
-ENV PYTHONPATH=/usr/data/app/backet-service
+ENV PYTHONPATH=/usr/data/app/bucket-service
 
 USER papperuser
 
-ENTRYPOINT ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--log-config", "backet-service/src/uvicorn-logging-config.yaml"]
+ENTRYPOINT ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--log-config", "bucket-service/src/uvicorn-logging-config.yaml"]

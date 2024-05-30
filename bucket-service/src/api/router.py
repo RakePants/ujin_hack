@@ -1,7 +1,7 @@
 import base64
 from typing import Annotated
 from fastapi import APIRouter, status, Body, Depends
-from src.api.dependencies import get_s3_client
+from .dependencies import get_s3_client
 from src.services import S3Service
 
 router = APIRouter(prefix="/s3", tags=["S3 Storage Service"])

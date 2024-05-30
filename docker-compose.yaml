@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  backet-service:
+    container_name: bucket-service
+    build:
+      context: .
+      dockerfile: ./bucket-service/Dockerfile
+    networks:
+      - ujin-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ACCESS_KEY=${ACCESS_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+      - ENDPOINT_URL=${ENDPOINT_URL}
+      - BUCKET_NAME=${BUCKET_NAME}
+
+networks:
+  ujin-backend:
+    driver: bridge
