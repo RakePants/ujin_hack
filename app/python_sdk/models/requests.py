@@ -2,7 +2,6 @@ from typing import Type, TypeVar, Generic, Union
 from pydantic import BaseModel, Json
 from .responses import *
 
-
 TResponse = TypeVar('TResponse')
 
 
@@ -35,8 +34,30 @@ class HealthCheckRequest(BaseRequest):
 
 
 class SubmissionRequest(BaseRequest):
-    response_model = SubmissionResponse
-    # TODO написать запрос для отправки заявки в УК
+    method: str = 'POST'
+    endpoint: str = 'https://api-uae-test.ujin.tech/api/v1/tck/bms/tickets/create/'
+    body: BodyModel = BodyModel(body={
+        "title": "заявка",
+        "description": "Обнаружен потусторонний объект",
+        "priority": "high",
+        "class": "client",
+        "status": "new",
+        "initiator.id": 739109,
+        "types": [1667],
+        "assignees": [],
+        "contracting_companies": [],
+        "objects": [
+            {
+                "type": "apartment",
+                "id": 1467
+            }
+        ],
+        "planned_start_at": None,
+        "planned_end_at": None,
+        "hide_planned_at_from_resident": None,
+        "extra": None  # todo: face_id
+    })
+    response_model: SubmissionResponse
 
 
 class OmissionRequest(BaseRequest):
