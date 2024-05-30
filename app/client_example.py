@@ -1,5 +1,5 @@
-from client import Client, Config
-from models import requests
+from python_sdk.client import Client, Config
+from python_sdk.models import requests
 
 
 client = Client(Config(
