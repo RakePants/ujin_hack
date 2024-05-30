@@ -11,7 +11,7 @@ class UJINSubmissions(BaseSubmission):
     client: Client
 
     async def create_submission(self, submission: SubmissionRequest):
-        raise NotImplementedError
+        return await self.client.execute(submission)
 
     async def get_submissions(self, submission_id):
         raise NotImplementedError
