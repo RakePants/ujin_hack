@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y iputils-ping &&\
     rm -rf /var/lib/apt/lists/* && \
     rm -r requirements
 
-COPY --chown=papperuser:papperuser . bucket-service/
+COPY --chown=apiuser:apiuser . bucket-service/
 
 ENV PYTHONPATH=/usr/data/app/bucket-service
 
