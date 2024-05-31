@@ -28,5 +28,4 @@ class AppClient(BaseAppClient):
 
     async def send(self, notification: Face) -> None:
         async with self.client as async_client:
-            print(self.format(notification))
-            await async_client.post('http://localhost:8081/person', json=self.format(notification=notification))
+            await async_client.post('http://77.223.100.176:8081/person', json=self.format(notification=notification))

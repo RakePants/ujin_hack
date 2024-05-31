@@ -1,22 +1,32 @@
 version: "3.9"
 
+
 services:
-  backet-service:
+  bucket-service:
     container_name: bucket-service
     build:
-      context: .
-      dockerfile: ./bucket-service/Dockerfile
+      context: bucket-service/.
+      dockerfile: Dockerfile
     restart: unless-stopped
     networks:
       - ujin-backend
     ports:
-      - "8000:8000"
-    environment:
-      - ACCESS_KEY=${ACCESS_KEY}
-      - SECRET_KEY=${SECRET_KEY}
-      - ENDPOINT_URL=${ENDPOINT_URL}
-      - BUCKET_NAME=${BUCKET_NAME}
+      - "8001:8001"
+    env_file:
+      - .env
 
+  app-service:
+    container_name: app-service
+    build:
+      context: app/.
+      dockerfile: Dockerfile
+#    restart: unless-stopped
+    networks:
+      - ujin-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
 networks:
   ujin-backend:
     driver: bridge

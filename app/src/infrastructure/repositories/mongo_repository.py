@@ -6,8 +6,8 @@ import datetime
 
 from pymongo.results import InsertOneResult
 
-from app.src.domain.entities.person import Person
-from app.src.infrastructure.repositories.base import BasePersonsRepository
+from src.domain.entities.person import Person
+from src.infrastructure.repositories.base import BasePersonsRepository
 
 
 @dataclass
@@ -18,10 +18,10 @@ class MongoPersonsRepository(BasePersonsRepository):
     def _get_collection(self, collection: uuid.UUID) -> AgnosticCollection:
         return self.mongo_db_client[self.mongo_db_name][str(collection)]
 
-    async def add_new_log_for_person(self, person: Person) -> InsertOneResult:
-        collection: AsyncIOMotorCollection = self._get_collection(person.face_id)
+    async def add_new_log_for_person(self, inserted_data: dict) -> InsertOneResult:
+        collection: AsyncIOMotorCollection = self._get_collection(inserted_data["face_id"])
         async with await self.mongo_db_client.start_session() as session:
-            return await collection.insert_one(person.convert_from_entities_to_document(), session=session)
+            return await collection.insert_one(inserted_data, session=session)
 
     async def get_logs_for_person(self, person: Person):
         pass

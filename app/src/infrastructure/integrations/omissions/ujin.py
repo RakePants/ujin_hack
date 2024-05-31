@@ -1,33 +1,65 @@
 from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
 
-from app.python_sdk.client import Client
-from app.python_sdk.models.requests import (
-    CreateOmissionRequest,
-    GetOmissionsListRequest,
-)
-from app.src.domain.entities.person import Person
-from app.src.infrastructure.integrations.omissions.base import BaseOmissions
+import httpx
+
+from src.config.config import Config
+from src.domain.entities.person import Person
+from src.infrastructure.integrations.omissions.base import BaseOmissions
 
 
 @dataclass
 class UJINOmission(BaseOmissions):
-    client: Client
+    async def create_omission(self, person: Person, config: Config):
+        query_params = {
+            "token": config.UJIN_CON_TOKEN,
+            "search": f"{person.last_name} {person.first_name} {person.patronymic}",
+            "type": "guest",
+            "apartment_id": 1467,
+            "per_page": 100,
+            "page": 1,
+        }
+        headers = {
+            "Content-Type": "application/json",
+        }
+        url = f"https://{config.UJIN_HOST}/v1/pass/crm/get-list"
 
-    async def create_omission(self, person: Person):
-        request = GetOmissionsListRequest.create_with_params(
-            full_name=f"{person.last_name} {person.first_name} {person.patronymic}"
-        )
-        print(request)
-        response = await self.client.execute(request_model=request)
-        body = response.model_dump()
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url, params=query_params, headers=headers)
+            response.raise_for_status
+        passes = response.json().get("data", {}).get("passes", [])
 
-        if body.data.passes:
-            if any(d.comment == str(person.face_id) for d in body.data.passes):
-                return
+        if passes and any(
+            pass_record.get("comment") == str(person.face_id) for pass_record in passes
+        ):
+            return
 
-        request = CreateOmissionRequest.create_with_params(
-            full_name=f"{person.last_name} {person.first_name} {person.patronymic}",
-            face_id=person.face_id,
-        )
+        current_time = datetime.now(timezone.utc)
+        date_start = int(current_time.timestamp())
+        date_end = int((current_time + timedelta(hours=4)).timestamp())
 
-        await self.client.execute(request_model=request)
+        body_params = {
+            "apartment_id": 1467,
+            "type": "guest",
+            "guest_fullname": f"{person.last_name} {person.first_name} {person.patronymic}",
+            "guest_phone": 78945612322,
+            "brand": "ABC",
+            "id_number": "a12345bc",
+            "comment": str(person.face_id),
+            "date_start": date_start,
+            "date_end": date_end,
+        }
+
+        url = f"https://{Config.UJIN_HOST}/v1/pass/create/"
+        headers = {
+            "Content-Type": "application/json",
+        }
+        params = {
+            "token": Config.UJIN_CON_TOKEN,
+        }
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                url, json=body_params, headers=headers, params=params
+            )
+            response.raise_for_status()

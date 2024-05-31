@@ -10,6 +10,5 @@ router = APIRouter()
 
 @router.post('/event')
 async def new_event(body: dict = Body(...), container: Container = Depends(init_container)):
-    print(body)
     app_client: BaseAppClient = container.resolve(BaseAppClient)
     await app_client.send(notification=Face.create_face(data=body))

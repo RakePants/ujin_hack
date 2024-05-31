@@ -1,9 +1,11 @@
 import abc
 
+from src.config.config import Config
+
 
 class BaseSubmission(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    async def create_submission(self, submission):
+    async def create_submission(self, config: Config):
         raise NotImplementedError
 
     @abc.abstractmethod

@@ -20,4 +20,4 @@ ENV PYTHONPATH=/usr/data/app/bucket-service
 
 USER papperuser
 
-ENTRYPOINT ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--log-config", "bucket-service/src/uvicorn-logging-config.yaml"]
+ENTRYPOINT ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8001", "--log-config", "bucket-service/src/uvicorn-logging-config.yaml"]
