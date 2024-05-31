@@ -19,7 +19,6 @@ class UJINOmission(BaseOmissions):
             "per_page": 100,
             "page": 1,
         }
-        print(query_params)
         headers = {
             "Content-Type": "application/json",
         }
@@ -28,7 +27,6 @@ class UJINOmission(BaseOmissions):
         async with httpx.AsyncClient() as client:
             response = await client.get(url, params=query_params, headers=headers)
             response.raise_for_status
-        print(response.text)
         passes = response.json().get("data", {}).get("passes", [])
 
         if passes and any(
