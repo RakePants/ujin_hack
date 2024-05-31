@@ -120,5 +120,4 @@ client = Client(Config(
 
 request = requests.HealthCheckRequest()
 response = client.execute(request_model)
-print(response)
 ```

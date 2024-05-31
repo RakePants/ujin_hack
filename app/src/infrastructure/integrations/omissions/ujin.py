@@ -17,8 +17,8 @@ class UJINOmission(BaseOmissions):
         request = GetOmissionsListRequest.create_with_params(
             full_name=f"{person.last_name} {person.first_name} {person.patronymic}"
         )
-        
-        response = await self.client.execute(request)
+        print(request)
+        response = await self.client.execute(request_model=request)
         body = response.model_dump()
 
         if body.data.passes:
@@ -30,4 +30,4 @@ class UJINOmission(BaseOmissions):
             face_id=person.face_id,
         )
 
-        await self.client.execute(request)
+        await self.client.execute(request_model=request)
