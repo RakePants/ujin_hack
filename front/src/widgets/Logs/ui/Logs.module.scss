@@ -1,0 +1,27 @@
+.table{
+    width: 80%;
+    margin: 0 auto;
+    overflow-x: auto;
+    @media screen and (max-width: 768px) {
+        height: 100%;
+    }
+}
+
+.row{
+    animation: fadeIn 2s ease-in-out;
+}
+.scrollBtn{
+    position: absolute;
+    bottom: 10px;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 100;
+}
+@keyframes fadeIn{
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}

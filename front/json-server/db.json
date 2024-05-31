@@ -1,0 +1,139 @@
+{
+    "logs": [
+        {
+            "macroscope_face_id": "1234567890",
+            "full_name": "John Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": false,
+            "is_authorized": false,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": false,
+            "is_authorized": false,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": false,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": false,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        },
+        {
+            "macroscope_face_id": "1234567891",
+            "full_name": "Jane Doe",
+            "is_identified": true,
+            "is_authorized": true,
+            "pass_issue_date": "2022-01-01T00:00:00.000Z",
+            "pass_expiration_date": "2022-01-01T00:00:00.000Z",
+            "detection_date": "2022-01-01T00:00:00.000Z"
+        }
+    ]
+}
