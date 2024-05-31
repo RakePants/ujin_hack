@@ -2,8 +2,6 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import punq
 from functools import lru_cache
 
-from app.python_sdk.client import Client, Config as UJINConfig
-
 from app.src.infrastructure.repositories.base import BasePersonsRepository
 from app.src.infrastructure.repositories.mongo_repository import MongoPersonsRepository
 from app.src.infrastructure.integrations.submissions import BaseSubmission, UJINSubmissions
@@ -35,16 +33,14 @@ def init_container() -> punq.Container:
 
     container.register(BasePersonsRepository, factory=init_mongodb_repository, scope=punq.Scope.singleton)
 
-    #ujin_client: Client = Client(UJINConfig(con_token=config.UJIN_CON_TOKEN, host=config.UJIN_HOST))
-#
-    #def init_submission_integration() -> BaseSubmission:
-    #    return UJINSubmissions(client=ujin_client)
-#
-    #def init_omission_integration() -> BaseOmissions:
-    #    return UJINOmission(client=ujin_client)
-#
-    #container.register(BaseSubmission, factory=init_submission_integration, scope=punq.Scope.singleton)
-    #container.register(BaseOmissions, factory=init_omission_integration, scope=punq.Scope.singleton)
+    def init_submission_integration() -> BaseSubmission:
+        return UJINSubmissions()
+
+    def init_omission_integration() -> BaseOmissions:
+        return UJINOmission()
+
+    container.register(BaseSubmission, factory=init_submission_integration, scope=punq.Scope.singleton)
+    container.register(BaseOmissions, factory=init_omission_integration, scope=punq.Scope.singleton)
 
     container.register(BaseConnectionManager, instance=ConnectionManager(), scope=punq.Scope.singleton)
 

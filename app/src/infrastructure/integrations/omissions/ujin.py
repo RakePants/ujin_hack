@@ -10,26 +10,26 @@ from app.src.infrastructure.integrations.omissions.base import BaseOmissions
 
 @dataclass
 class UJINOmission(BaseOmissions):
-    async def create_omission(self, person: Person):
+    async def create_omission(self, person: Person, config: Config):
         query_params = {
-            "token": Config.UJIN_CON_TOKEN,
+            "token": config.UJIN_CON_TOKEN,
             "search": f"{person.last_name} {person.first_name} {person.patronymic}",
             "type": "guest",
             "apartment_id": 1467,
             "per_page": 100,
             "page": 1,
         }
-
+        print(query_params)
         headers = {
             "Content-Type": "application/json",
         }
-        url = f"https://{Config.UJIN_HOST}/v1/pass/crm/get-list"
+        url = f"https://{config.UJIN_HOST}/v1/pass/crm/get-list"
 
         async with httpx.AsyncClient() as client:
             response = await client.get(url, params=query_params, headers=headers)
             response.raise_for_status
-
-        passes = response.get("data", {}).get("passes", [])
+        print(response.text)
+        passes = response.json().get("data", {}).get("passes", [])
 
         if passes and any(
             pass_record.get("comment") == str(person.face_id) for pass_record in passes

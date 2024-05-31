@@ -1,9 +1,9 @@
 FROM python:3.12.2-slim
 LABEL authors="osetr4"
 
-WORKDIR /usr/src
+WORKDIR /usr/app
 
-COPY requirements.txt /usr/src/
+COPY requirements.txt /usr/app/
 
 RUN apt-get update && apt-get install -y iputils-ping &&\
     pip install --upgrade pip && \
@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y iputils-ping &&\
     rm -rf /var/lib/apt/lists/* && \
     rm -r requirements.txt
 
-COPY --chown=apiuser:apiuser ./src/ /usr/src/
-ENV PYTHONPATH=/usr/src
+COPY ./src/ /usr/app/src/
+ENV PYTHONPATH=/usr/app
 
 ENTRYPOINT ["uvicorn", "src.application.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
