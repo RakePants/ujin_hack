@@ -3,9 +3,9 @@ from dataclasses import dataclass
 
 from httpx import AsyncClient
 
-from gateway.src.domain.entities.face import Face
-from gateway.src.domain.values.face import AppFormat, AppFormatIdentified
-from gateway.src.infrastructure.integrations.app.base import BaseAppClient
+from ....domain.entities.face import Face
+from ....domain.values.face import AppFormat, AppFormatIdentified
+from ....infrastructure.integrations.app.base import BaseAppClient
 
 
 @dataclass
@@ -28,4 +28,4 @@ class AppClient(BaseAppClient):
 
     async def send(self, notification: Face) -> None:
         async with self.client as async_client:
-            await async_client.post('http://77.223.100.176:8081/person', json=self.format(notification=notification))
+            await async_client.post('http://app-service:8081/person', json=self.format(notification=notification))

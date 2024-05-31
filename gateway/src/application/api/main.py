@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from gateway.src.application.api.faces import handlers
+from ...application.api.faces import handlers
 
 
 def create_app() -> FastAPI:

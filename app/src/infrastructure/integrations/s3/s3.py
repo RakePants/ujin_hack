@@ -8,5 +8,5 @@ class ServiceS3(BaseS3):
     async def upload_image(self, file: str) -> dict:
         res = None
         async with httpx.AsyncClient() as client:
-            res = await client.post('http://localhost:8000/s3/upload-image', json=file)
+            res = await client.post('http://bucket-service:8000/s3/upload-image', json=file)
         return res.json()

@@ -1,7 +1,7 @@
 import abc
 
-from src.config.config import Config
-from src.domain.entities.person import Person
+from ....config.config import Config
+from ....domain.entities.person import Person
 
 
 class BaseOmissions(metaclass=abc.ABCMeta):

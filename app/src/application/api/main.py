@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Request, Response
 
-from src.application.api.persons import handlers
+from ...application.api.persons import handlers
 
 
 def create_app():

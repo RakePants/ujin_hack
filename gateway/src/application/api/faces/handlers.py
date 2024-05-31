@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Body, Depends
 from punq import Container
 
-from gateway.src.application import init_container
-from gateway.src.infrastructure.integrations.app.base import BaseAppClient
-from gateway.src.domain.entities.face import Face
+from ....application import init_container
+from ....infrastructure.integrations.app.base import BaseAppClient
+from ....domain.entities.face import Face
 
 router = APIRouter()
 

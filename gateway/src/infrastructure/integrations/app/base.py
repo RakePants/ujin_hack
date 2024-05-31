@@ -1,7 +1,7 @@
 import abc
 from dataclasses import dataclass
 
-from gateway.src.domain.entities.face import Face
+from ....domain.entities.face import Face
 
 
 @dataclass
