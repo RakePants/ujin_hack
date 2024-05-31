@@ -1,5 +1,7 @@
+import uuid
+from datetime import datetime, timezone, timedelta
 from typing import Type, TypeVar, Generic, Union
-from pydantic import BaseModel, Json
+from pydantic import BaseModel, Json, Field
 from .responses import *
 
 TResponse = TypeVar("TResponse")
@@ -30,7 +32,7 @@ class HealthCheckRequest(BaseRequest):
     method: str = 'GET'
     endpoint: str = '/echo/'
     query: QueryModel = QueryModel(query={'json': 1})
-    response_model: HealthCheckResponse
+    response_model: Type[HealthCheckResponse] = HealthCheckResponse
 
 
 class CreateOmissionRequest(BaseRequest):
@@ -49,7 +51,8 @@ class CreateOmissionRequest(BaseRequest):
             "date_end": None,
         }
     )
-    response_model: OmissionResponse
+
+    response_model: Type[OmissionResponse] = OmissionResponse
 
     @classmethod
     def create_with_params(cls, full_name: str, face_id: uuid.UUID):
@@ -82,10 +85,11 @@ class GetOmissionsListRequest(BaseRequest):
             "page": 1,
         }
     )
-    response_model: OmissionResponse
 
     @classmethod
     def create_with_params(cls, full_name: str):
+        print(cls.method)
+        print(cls.__dict__)
         query_params = cls.query.query.copy()
         query_params.update(
             {
@@ -120,9 +124,5 @@ class SubmissionRequest(BaseRequest):
         "hide_planned_at_from_resident": None,
         "extra": None  # todo: face_id
     })
-    response_model: SubmissionResponse
 
-
-class OmissionRequest(BaseRequest):
-    response_model = OmissionResponse
-    # TODO написать запрос для получения пропуска
+    response_model: Type[SubmissionResponse] = SubmissionResponse

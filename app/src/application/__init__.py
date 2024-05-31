@@ -14,8 +14,6 @@ def init_container() -> punq.Container:
     container: punq.Container = punq.Container()
     container.register(AppConfig, instance=AppConfig(), scope=punq.Scope.singleton)
     config: AppConfig = container.resolve(AppConfig)
-    print(config)
-    print(config.MONGODB_CONNECTION_URI, config.UJIN_CON_TOKEN, config.UJIN_HOST)
 
     def create_mongodb_client():
         return AsyncIOMotorClient(

@@ -1,14 +1,18 @@
+import asyncio
+
 from client import Client, Config
 from models import requests
 
 
 client = Client(Config(
-    con_token='con-1837-89364359ef71333c0c20a5673a9ae55b', 
-    host='https://api-product.mysmartflat.ru/api'
+    con_token='ust-739109-3fe72efd12ef86582919741571b1cb40',
+    host='api-uae-test.ujin.tech'
 ))
 
 rm = requests.HealthCheckRequest()
 
-res = client.execute(rm)
+async def main():
+    res = await client.execute(request_model=rm)
 
-print(res)
+
+asyncio.run(main())

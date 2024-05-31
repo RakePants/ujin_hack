@@ -13,9 +13,9 @@ class Client:
         response: httpx.Response = await self._client.request(
             request_model.method,
             request_model.endpoint,
-            headers=request_model.headers.model_dump(exclude_none=True),
-            params=request_model.query.model_dump(exclude_none=True).update({'token': self._config.auth.con_token, 'egt': self._config.auth.entity_guid_type}),
-            json=request_model.body.model_dump(exclude_none=True),
+            headers=(request_model.headers.model_dump(exclude_none=True) if request_model.headers else None),
+            params=(request_model.query.model_dump(exclude_none=True) if request_model.query else {}).update({'token': self._config.auth.con_token, 'egt': self._config.auth.entity_guid_type}),
+            json=(request_model.body.model_dump(exclude_none=True) if request_model.body else None),
             **kwargs
         )
 
@@ -33,4 +33,5 @@ class Client:
         try:
             return request_model.response_model(**response.json())
         except Exception as ex:
+            print(ex)
             raise BaseError(ex)
