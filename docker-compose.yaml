@@ -14,8 +14,13 @@ services:
       - ujin-backend
     ports:
       - "8000"
-    env_file:
-      - .env
+    environment:
+      - ACCESS_KEY=${ACCESS_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+      - ENDPOINT_URL=${ENDPOINT_URL}
+      - BUCKET_NAME=${BUCKET_NAME}
+
+
 
   app-service:
     container_name: app-service
