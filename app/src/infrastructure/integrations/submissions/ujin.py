@@ -13,7 +13,7 @@ class UJINSubmissions(BaseSubmission):
     client: Client
 
     async def create_submission(self, submission: SubmissionRequest):
-        url = f'{Config.UJIN_HOST}api/v1/tck/bms/tickets/create/?token={Config.UJIN_CON_TOKEN}'
+        url = f'{Config.UJIN_HOST}/api/v1/tck/bms/tickets/create/?token={Config.UJIN_CON_TOKEN}'
         headers = {
             'accept': 'application/json',
             'Content-Type': 'application/json'
