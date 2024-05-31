@@ -20,23 +20,38 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 const columns: TableProps<LogSchema>['columns'] = [
     {
         title: 'Фото',
-        dataIndex: 'macroscope_face_id',
-        key: 'macroscope_face_id',
+        dataIndex: 'image',
+        key: 'image',
         width: 100,
-        render: (val) => <Avatar src={"https://4b1ee103-c4f7-4f1b-af2f-fade32f113d3.selstorage.ru/photo_2024-03-16_11-01-04.jpg"} size={64} />
+        render: (val) => <Avatar src={`https://4b1ee103-c4f7-4f1b-af2f-fade32f113d3.selstorage.ru/${val}`} size={64} />
     },
     {
         title: 'ID',
-        dataIndex: 'macroscope_face_id',
-        key: 'macroscope_face_id',
+        dataIndex: 'face_id',
+        key: 'face_id',
         width: 100,
         responsive: ['md'],
     },
     {
-        title: 'Полное имя',
+        title: 'Имя',
         width: 150,
-        dataIndex: 'full_name',
+        dataIndex: 'first_name',
         key: 'full_name',
+        render: (val) => {if (val === null) return "-"; return val}
+        },
+    {
+        title: 'Фамилия',
+        width: 150,
+        dataIndex: 'last_name',
+        key: 'full_name',
+        render: (val) => {if (val === null) return "-"; return val}
+    },
+    {
+        title: 'Отчество',
+        width: 150,
+        dataIndex: 'patronymic',
+        key: 'full_name',
+        render: (val) => {if (val === null) return "-"; return val}
     },
     {
         title: 'Идентифицирован',
@@ -50,7 +65,7 @@ const columns: TableProps<LogSchema>['columns'] = [
         dataIndex: 'pass_issue_date',
         key: 'pass_issue_date',
         width: 200,
-        render: (val) => new Date(val).toLocaleDateString("ru", dateOptions),
+        render: (val) => { if (val === null) return "-"; return new Date(val).toLocaleDateString("ru", dateOptions) },
 
     },
     {
@@ -58,14 +73,14 @@ const columns: TableProps<LogSchema>['columns'] = [
         dataIndex: 'pass_expiration_date',
         key: 'pass_expiration_date',
         width: 200,
-        render: (val) => new Date(val).toLocaleDateString("ru",dateOptions),
+        render: (val) => { if (val === null) return "-"; return new Date(val).toLocaleDateString("ru", dateOptions) },
     },
     {
         title: 'Дата обнаружения',
         dataIndex: 'detection_date',
         key: 'detection_date',
         width: 200,
-        render: (val) => new Date(val).toLocaleDateString("ru", dateOptions),
+        render: (val) => { if (val === null) return "-"; return new Date(val).toLocaleDateString("ru", dateOptions) },
     },
 ]
 
@@ -81,24 +96,25 @@ export const Logs = ({ className }: LogsProps) => {
         //     setData(res.data)
         //     setShowScrollBtn(true)
         // })
-        socket.current = new WebSocket('ws://localhost:8080/')
+        socket.current = new WebSocket('ws://77.223.100.176:8081/realtime')
         socket.current.onopen = () => {
             console.log(123)
-            socket.current.send(JSON.stringify({type: 'read', path: 'logs'}));
+
         }
         socket.current.onmessage = (event: MessageEvent) => {
-            const message = JSON.parse(event.data)
-            console.log(message.data)
-            setData([...data, ...message.data])
+            const message: LogSchema = JSON.parse(event.data)
             const tableBody = document.querySelector('.ant-table-body')
-            console.log(tableBody)
-            tableBody.scrollTo({ top: tableBody.scrollHeight, behavior: 'smooth' })
+            const { scrollTop, scrollHeight, clientHeight } = tableBody
+            const needToScroll = scrollHeight - scrollTop === clientHeight
+            setData((prev) => [...prev, message])
+            if(needToScroll) {
+                tableBody.scrollTo({ top: tableBody.scrollHeight, behavior: 'smooth' }) }
         }
         socket.current.onclose = () => {
             console.log(321)
         }
-        socket.current.onerror = () => {
-            console.log("error")
+        socket.current.onerror = (e) => {
+            console.log(e)
         }
         return () => {
             socket.current?.close()
@@ -120,16 +136,17 @@ export const Logs = ({ className }: LogsProps) => {
         }
     }
     return (
-        <div style={{position: 'relative'}}>
+        <div style={{ position: 'relative' }}>
             <Table
                 columns={columns}
                 pagination={false}
                 dataSource={data}
                 rowClassName={cls.row}
                 ref={tableRef}
-                scroll={{ y: 500 , x: '100%'}}
+                scroll={{ y: 500, x: '100%' }}
                 className={cls.table}
                 onScroll={handleScroll}
+                locale={{ emptyText: 'Нет данных' }}
             />
             {showScrollBtn && <Button type='primary' size='large' shape='circle' icon={<ArrowDownOutlined />} className={cls.scrollBtn} onClick={() => handleClick()}></Button>}
         </div>

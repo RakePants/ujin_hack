@@ -1,5 +1,5 @@
 .table{
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     overflow-x: auto;
     @media screen and (max-width: 768px) {
@@ -8,7 +8,7 @@
 }
 
 .row{
-    animation: fadeIn 2s ease-in-out;
+    animation: fadeIn 1s ease-in-out;
 }
 .scrollBtn{
     position: absolute;
