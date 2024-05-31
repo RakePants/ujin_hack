@@ -1,5 +1,7 @@
 version: "3.9"
 
+include:
+  - path: front/docker-compose.yaml
 
 services:
   bucket-service:
