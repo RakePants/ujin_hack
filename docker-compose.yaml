@@ -29,6 +29,10 @@ services:
       - .env
     depends_on:
       - bucket-service
+      - mongodb-service
+    links:
+      - mongodb-service
+      - bucket-service
 
   gateway-service:
     container_name: gateway-service
@@ -41,6 +45,18 @@ services:
       - "8080:8080"
     depends_on:
       - app-service
+    links:
+      - app-service
+
+  mongodb-service:
+    container_name: mongodb-service
+    image: mongo
+    networks:
+      - ujin-backend
+    ports:
+      - "27017:27017"
+    volumes:
+      - dbdata6:/data/db
 
 
 networks:
