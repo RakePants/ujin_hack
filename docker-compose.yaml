@@ -20,7 +20,7 @@ services:
     build:
       context: app/.
       dockerfile: Dockerfile
-    restart: unless-stopped
+#    restart: unless-stopped
     networks:
       - ujin-backend
     ports:

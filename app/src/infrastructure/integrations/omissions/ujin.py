@@ -3,9 +3,9 @@ from datetime import datetime, timedelta, timezone
 
 import httpx
 
-from app.src.config.config import Config
-from app.src.domain.entities.person import Person
-from app.src.infrastructure.integrations.omissions.base import BaseOmissions
+from src.config.config import Config
+from src.domain.entities.person import Person
+from src.infrastructure.integrations.omissions.base import BaseOmissions
 
 
 @dataclass

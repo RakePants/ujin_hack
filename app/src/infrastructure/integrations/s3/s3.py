@@ -1,4 +1,4 @@
-from app.src.infrastructure.integrations.s3.base import BaseS3
+from src.infrastructure.integrations.s3.base import BaseS3
 import httpx
 
 

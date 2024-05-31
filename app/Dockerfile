@@ -1,18 +1,18 @@
-FROM python:3.12.2-slim
+FROM python:3.12
 LABEL authors="osetr4"
 
-WORKDIR /usr/app
+WORKDIR /usr/service/
 
-COPY requirements.txt /usr/app/
+COPY requirements.txt /usr/service/app/
 
 RUN apt-get update && apt-get install -y iputils-ping &&\
     pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir -r ./app/requirements.txt && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -r requirements.txt
+    rm ./app/requirements.txt
 
-COPY ./src/ /usr/app/src/
-ENV PYTHONPATH=/usr/app
+COPY . /usr/service/app/
+ENV PYTHONPATH=/usr/service
 
 ENTRYPOINT ["uvicorn", "src.application.api.main:app", "--host", "0.0.0.0", "--port", "8000"]

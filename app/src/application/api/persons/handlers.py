@@ -6,16 +6,16 @@ from punq import Container
 from pymongo.results import InsertOneResult
 from starlette.websockets import WebSocketDisconnect
 
-from app.src.application import init_container
-from app.src.application.api.persons.converters import from_model_to_entity
-from app.src.config.config import Config
-from app.src.domain.entities.person import Person
-from app.src.infrastructure.integrations.s3.base import BaseS3
-from app.src.infrastructure.repositories.base import BasePersonsRepository
-from app.src.application.api.persons.schema import PersonRequestSchema, PersonResponseSchema
-from app.src.infrastructure.integrations.submissions import BaseSubmission
-from app.src.infrastructure.integrations.omissions import BaseOmissions
-from app.src.infrastructure.websockets.managers import BaseConnectionManager
+from src.application import init_container
+from src.application.api.persons.converters import from_model_to_entity
+from src.config.config import Config
+from src.domain.entities.person import Person
+from src.infrastructure.integrations.s3.base import BaseS3
+from src.infrastructure.repositories.base import BasePersonsRepository
+from src.application.api.persons.schema import PersonRequestSchema, PersonResponseSchema
+from src.infrastructure.integrations.submissions import BaseSubmission
+from src.infrastructure.integrations.omissions import BaseOmissions
+from src.infrastructure.websockets.managers import BaseConnectionManager
 
 router = APIRouter()
 

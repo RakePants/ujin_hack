@@ -2,8 +2,6 @@ import uuid
 import datetime
 from pydantic import BaseModel, EmailStr, UUID4, Field
 
-from app.src.domain.entities.person import Person
-
 
 class PersonRequestSchema(BaseModel):
     face_id: UUID4

@@ -1,6 +1,6 @@
 import abc
 
-from app.src.config.config import Config
+from src.config.config import Config
 
 
 class BaseSubmission(metaclass=abc.ABCMeta):

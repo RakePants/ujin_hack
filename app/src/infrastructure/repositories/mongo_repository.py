@@ -6,8 +6,8 @@ import datetime
 
 from pymongo.results import InsertOneResult
 
-from app.src.domain.entities.person import Person
-from app.src.infrastructure.repositories.base import BasePersonsRepository
+from src.domain.entities.person import Person
+from src.infrastructure.repositories.base import BasePersonsRepository
 
 
 @dataclass

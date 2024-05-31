@@ -1,4 +1,4 @@
-from app.src.application.api.persons.schema import PersonRequestSchema
+from .schema import PersonRequestSchema
 
 
 def from_model_to_entity(person: PersonRequestSchema, file_name: str) -> dict:

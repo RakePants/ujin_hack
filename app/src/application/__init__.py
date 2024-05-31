@@ -2,13 +2,13 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import punq
 from functools import lru_cache
 
-from app.src.infrastructure.repositories.base import BasePersonsRepository
-from app.src.infrastructure.repositories.mongo_repository import MongoPersonsRepository
-from app.src.infrastructure.integrations.submissions import BaseSubmission, UJINSubmissions
-from app.src.infrastructure.integrations.omissions import BaseOmissions, UJINOmission
-from app.src.config.config import Config as AppConfig
-from app.src.infrastructure.websockets.managers import BaseConnectionManager, ConnectionManager
-from app.src.infrastructure.integrations.s3 import BaseS3, ServiceS3
+from src.infrastructure.repositories.base import BasePersonsRepository
+from src.infrastructure.repositories.mongo_repository import MongoPersonsRepository
+from src.infrastructure.integrations.submissions import BaseSubmission, UJINSubmissions
+from src.infrastructure.integrations.omissions import BaseOmissions, UJINOmission
+from src.config.config import Config as AppConfig
+from src.infrastructure.websockets.managers import BaseConnectionManager, ConnectionManager
+from src.infrastructure.integrations.s3 import BaseS3, ServiceS3
 
 
 @lru_cache(maxsize=None)
