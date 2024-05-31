@@ -62,3 +62,6 @@ services:
 networks:
   ujin-backend:
     driver: bridge
+
+volumes:
+  dbdata6:
