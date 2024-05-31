@@ -3,7 +3,7 @@ import abc
 
 class BaseSubmission(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    async def create_submission(self, submission):
+    async def create_submission(self):
         raise NotImplementedError
 
     @abc.abstractmethod

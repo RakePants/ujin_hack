@@ -13,4 +13,4 @@ async def root():
 app.include_router(s3_router)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8000)
+    uvicorn.run(app, host="localhost", port=8001)

@@ -2,17 +2,13 @@ from dataclasses import dataclass
 
 import httpx
 
-from app.python_sdk.client import Client
-from app.python_sdk.models.requests import SubmissionRequest
 from app.src.infrastructure.integrations.submissions.base import BaseSubmission
 from app.src.config.config import Config
 
 
 @dataclass
 class UJINSubmissions(BaseSubmission):
-    client: Client
-
-    async def create_submission(self, submission: SubmissionRequest):
+    async def create_submission(self):
         url = f'{Config.UJIN_HOST}/api/v1/tck/bms/tickets/create/?token={Config.UJIN_CON_TOKEN}'
         headers = {
             'accept': 'application/json',

@@ -8,7 +8,7 @@ from app.src.domain.entities.person import Person
 @dataclass
 class BasePersonsRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    async def add_new_log_for_person(self, person: Person):
+    async def add_new_log_for_person(self, data: dict):
         raise NotImplementedError
 
     @abc.abstractmethod

@@ -14,8 +14,8 @@ from fastapi import WebSocket
 
 @dataclass
 class BaseConnectionManager(ABC):
-    connections_map: dict[str, list[WebSocket]] = field(
-        default_factory=lambda: defaultdict(list),
+    connections_map: dict[str, WebSocket] = field(
+        default_factory=lambda: dict(),
         kw_only=True,
     )
 
@@ -28,9 +28,27 @@ class BaseConnectionManager(ABC):
         ...
 
     @abstractmethod
-    async def send_all(self, key: str, bytes_: bytes):
+    async def send_all(self, data: dict):
         ...
 
     @abstractmethod
     async def disconnect_all(self, key: str):
         ...
+
+
+@dataclass
+class ConnectionManager(BaseConnectionManager):
+    async def accept_connection(self, websocket: WebSocket, key: str):
+        await websocket.accept()
+        self.connections_map[key] = websocket
+
+    async def remove_connection(self, websocket: WebSocket, key: str):
+        del self.connections_map[key]
+
+    async def send_all(self, data: dict):
+        for websocket in self.connections_map.values():
+            await websocket.send_json(data)
+
+    async def disconnect_all(self, key: str):
+        for websocket in self.connections_map.values():
+            await websocket.close()
