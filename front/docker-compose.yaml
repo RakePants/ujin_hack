@@ -7,6 +7,12 @@ services:
     ports:
       - "80:80"
     restart: unless-stopped
+    networks:
+      - ujin-backend
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./build:/etc/nginx/www
+
+networks:
+  ujin-backend:
+    driver: bridge
