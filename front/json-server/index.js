@@ -26,7 +26,6 @@ server.get('/logs', (req, res) => {
     try {
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
         const { logs = [] } = db;
-        console.log(logs);
 
         if (logs) {
             return res.json(logs);

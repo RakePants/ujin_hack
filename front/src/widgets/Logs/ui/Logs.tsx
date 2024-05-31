@@ -75,11 +75,34 @@ export const Logs = ({ className }: LogsProps) => {
     const [data, setData] = useState<LogSchema[]>([])
     const tableRef = useRef(null)
     const [showScrollBtn, setShowScrollBtn] = useState(false)
+    const socket = useRef<WebSocket>()
     useEffect(() => {
-        $api.get<LogSchema[]>('/logs').then((res) => {
-            setData(res.data)
-            setShowScrollBtn(true)
-        })
+        // $api.get<LogSchema[]>('/logs').then((res) => {
+        //     setData(res.data)
+        //     setShowScrollBtn(true)
+        // })
+        socket.current = new WebSocket('ws://localhost:8080/')
+        socket.current.onopen = () => {
+            console.log(123)
+            socket.current.send(JSON.stringify({type: 'read', path: 'logs'}));
+        }
+        socket.current.onmessage = (event: MessageEvent) => {
+            const message = JSON.parse(event.data)
+            console.log(message.data)
+            setData([...data, ...message.data])
+            const tableBody = document.querySelector('.ant-table-body')
+            console.log(tableBody)
+            tableBody.scrollTo({ top: tableBody.scrollHeight, behavior: 'smooth' })
+        }
+        socket.current.onclose = () => {
+            console.log(321)
+        }
+        socket.current.onerror = () => {
+            console.log("error")
+        }
+        return () => {
+            socket.current?.close()
+        }
     }, [])
     const handleClick = () => {
         const tableBody = document.querySelector('.ant-table-body')
