@@ -7,7 +7,7 @@ services:
   backet-service:
     container_name: bucket-service
     build:
-      context: ./bucket-service
+      context: bucket-service
       dockerfile: Dockerfile
     restart: unless-stopped
     networks:
