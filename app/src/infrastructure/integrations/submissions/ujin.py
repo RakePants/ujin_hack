@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 import httpx
 
-from src.config.config import Config
-from src.infrastructure.integrations.submissions.base import BaseSubmission
+from ....config.config import Config
+from ....infrastructure.integrations.submissions.base import BaseSubmission
 
 
 @dataclass

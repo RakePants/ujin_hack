@@ -2,7 +2,7 @@ import abc
 import datetime
 from dataclasses import dataclass
 
-from src.domain.entities.person import Person
+from ...domain.entities.person import Person
 
 
 @dataclass

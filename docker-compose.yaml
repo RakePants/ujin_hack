@@ -1,5 +1,7 @@
 version: "3.9"
 
+include:
+  - path: front/docker-compose.yaml
 
 services:
   bucket-service:
@@ -11,7 +13,7 @@ services:
     networks:
       - ujin-backend
     ports:
-      - "8001:8001"
+      - "8000"
     env_file:
       - .env
 
@@ -20,13 +22,48 @@ services:
     build:
       context: app/.
       dockerfile: Dockerfile
-#    restart: unless-stopped
+    restart: unless-stopped
     networks:
       - ujin-backend
     ports:
-      - "8000:8000"
+      - "8081:8081"
     env_file:
       - .env
+    depends_on:
+      - bucket-service
+      - mongodb-service
+    links:
+      - mongodb-service
+      - bucket-service
+
+  gateway-service:
+    container_name: gateway-service
+    build:
+      context: gateway/.
+      dockerfile: Dockerfile
+    networks:
+      - ujin-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - app-service
+    links:
+      - app-service
+
+  mongodb-service:
+    container_name: mongodb-service
+    image: mongo
+    networks:
+      - ujin-backend
+    ports:
+      - "27017:27017"
+    volumes:
+      - dbdata6:/data/db
+
+
 networks:
   ujin-backend:
     driver: bridge
+
+volumes:
+  dbdata6:

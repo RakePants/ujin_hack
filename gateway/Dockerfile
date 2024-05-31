@@ -15,4 +15,4 @@ RUN apt-get update && apt-get install -y iputils-ping &&\
 COPY . /usr/app/
 ENV PYTHONPATH=/usr/app
 
-ENTRYPOINT ["uvicorn", "--factory", "src.application.api.main:create_app", "--host", "0.0.0.0", "--port", "8081"]
+ENTRYPOINT ["uvicorn", "--factory", "src.application.api.main:create_app", "--host", "0.0.0.0", "--port", "8080"]
